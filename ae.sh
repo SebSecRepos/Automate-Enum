@@ -53,8 +53,6 @@ clear
     echo -e "\t${purple}ht ${yellow} ./URL_HTTPX/${end}\n"; >&2
     echo -e "\t${purple}cr ${yellow} ./URL_FILTERED/${end}\n"; >&2
 
-
-    
 }
 
 
@@ -68,6 +66,10 @@ if [[ ! -f /usr/bin/nslookup ]]; then
 fi
 if [[ ! -f /usr/bin/whois ]]; then
         echo -e "\n${yellow}[!] ${red}\"whois\" Is required${green} \n\n\t apt install whois\n${end}"
+        dependencies=1
+fi
+if [[ ! -f /usr/bin/sponge ]]; then
+        echo -e "\n${yellow}[!] ${red}\"moreutils\" Is required${green} \n\n\t apt install moreutils\n${end}"
         dependencies=1
 fi
 if [[ ! -f /usr/bin/subfinder ]]; then

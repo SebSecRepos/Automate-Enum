@@ -19,6 +19,35 @@ if [[ "$(whoami)" != root ]];then
 fi
 
 
+echo -e "${green} \"Automate enum\" require following dependencies:${end}"
+echo -e "${purple}\n\t -> batcat${end}"
+echo -e "${purple}\n\t -> dnsutils${end}"
+echo -e "${purple}\n\t -> whois${end}"
+echo -e "${purple}\n\t -> subfinder${end}"
+echo -e "${purple}\n\t -> assetfinder${end}"
+echo -e "${purple}\n\t -> waybackurls${end}"
+echo -e "${purple}\n\t -> urlfinder${end}"
+echo -e "${purple}\n\t -> httpx${end}"
+echo -e "${purple}\n\t -> moreutils${end}"
+echo -e "\n${green} Do you want automate install the missing dependencies? ${yellow}(yes/no)${end}"
+
+read $option
+
+if [[ "$option" -eq "yes" ]] || [[ "$option" -eq "YES" ]]; then
+
+        echo -e "${yellow}\n [+] installing dependencies ${end}"
+        /usr/bin/go install -v github.com/projectdiscovery/subfinder/v2/cmd/subfinder@latest
+        /usr/bin/go install -v github.com/tomnomnom/assetfinder@latest
+        /usr/bin/go install github.com/tomnomnom/waybackurls@latest
+        /usr/bin/go install -v github.com/projectdiscovery/urlfinder/cmd/urlfinder@latest
+        /usr/bin/go install -v github.com/projectdiscovery/httpx/cmd/httpx@latest
+        /usr/bin/apt -y install bat dnsutils whois moreutils
+
+fi
+
+
+
+
 if [[ ! -f /usr/bin/batcat ]]; then
         echo -e "\n${yellow}[!] ${red}\"batcat\" Is required${green} \n\n\t apt install bat\n${end}"
         dependencies=1
@@ -52,7 +81,7 @@ if [[ ! -f $HOME/go/bin/httpx ]]; then
         dependencies=1
 fi
 if [[ ! -f /usr/bin/sponge ]]; then
-        echo -e "\n${yellow}[!] ${red}\"sponge\" Is required${green} \n\n\t apt install sponge\n${end}"
+        echo -e "\n${yellow}[!] ${red}\"moreutils\" Is required${green} \n\n\t apt install moreutils\n${end}"
         dependencies=1
 fi
 if [[ $dependencies -eq 1 ]]; then
