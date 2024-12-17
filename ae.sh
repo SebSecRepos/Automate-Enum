@@ -13,6 +13,7 @@ gray="\e[0;37m\033[1m"
 
 
 
+
 function usage(){
 
 
@@ -28,13 +29,13 @@ cat << 'EOF'
 |                                                                                             |
  =============================================================================================
 
- --> Automate DNS & URL enumeration
+ --> Automate URL & Subdomain enumeration
+ --> Automate AXFR Attacks
 
 EOF
 
 echo -e "${end}"
 sleep 1.5
-clear
 
     echo -e "\n${green}[+] Uso:${end}\n"
     echo -e "\t ${green}ae ${purple}<module> ${yellow}<parameters>${end} \n"; >&2
@@ -76,7 +77,7 @@ if [[ ! -f /usr/bin/subfinder ]]; then
         echo -e "\n${yellow}[!] ${red}\"subfinder\" Is required${green} \n\n\t go install -v github.com/projectdiscovery/subfinder/v2/cmd/subfinder@latest\n${end}"
         dependencies=1
 fi
-if [[ ! -f /usr/bin/assetfinder ]]; then
+if [[ ! -f $HOME/go/bin/assetfinder ]]; then
         echo -e "\n${yellow}[!] ${red}\"assetfinder\" Is required${green} \n\n\t go install -v github.com/tomnomnom/assetfinder@latest\n${end}"
         dependencies=1
 fi
@@ -125,6 +126,7 @@ function critical(){
     shift
     ./modules/1.Reccon/critical.sh $@
 }
+
 
 
 

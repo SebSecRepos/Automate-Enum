@@ -31,9 +31,10 @@ echo -e "${purple}\n\t -> httpx${end}"
 echo -e "${purple}\n\t -> moreutils${end}"
 echo -e "\n${green} Do you want automate install the missing dependencies? ${yellow}(yes/no)${end}"
 
-read $option
+read option
+option=$(echo "$option" | xargs)
 
-if [[ "$option" -eq "yes" ]] || [[ "$option" -eq "YES" ]]; then
+if [[ "$option" == "yes" ]] || [[ "$option" == "YES" ]]; then
 
         echo -e "${yellow}\n [+] installing dependencies ${end}"
         /usr/bin/go install -v github.com/projectdiscovery/subfinder/v2/cmd/subfinder@latest
