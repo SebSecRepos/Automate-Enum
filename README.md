@@ -25,7 +25,7 @@ ae <module> <option>
 
 -----
 
-#### Example passive subdomain enumeration using subfinder & assetfinder
+#### Example of passive subdomain enumeration using subfinder & assetfinder
 
 ```bash
 ae dm -d google.com
@@ -34,7 +34,7 @@ ae dm -d google.com
 ![imagen](https://github.com/user-attachments/assets/886406e6-6959-42ce-8b8d-51fedf424aa8)
 
 
-#### Example automate axfr attack using domain/subdomain wordlist & automate DNS Enumeration
+#### Example of automate axfr attack using domain/subdomain wordlist & automate DNS Enumeration
 > All results will be saved in *./DNS_ENUM/domain/DNS_lookup*  && *./DNS_ENUM/domain/authoritative_victim_dns*
 
 ```bash
