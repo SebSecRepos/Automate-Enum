@@ -13,49 +13,69 @@ output=""
 url=""
 list=0
 
-function usage(){
-    echo -e "\n${green}[+] Url module usage: \n\t${yellow}ae ur [-u url_list/url] -o file\n${end}"; >&2
+function usage() {
+  echo -e "\n${green}[+] Url module usage: \n\t${yellow}ae ur [-u url_list/url] -o file\n${end}"
+  >&2
 }
 
-function exist_url_folder(){
+function exist_url_folder() {
 
-    if [[ ! -d ./URL_ENUM/ ]]; then
+  if [[ ! -d ./URL_ENUM/ ]]; then
 
-        mkdir ./URL_ENUM/
-    fi
+    mkdir ./URL_ENUM/
+  fi
 
 }
-
-
 
 while getopts "u:" option; do
-    case "${option}" in
-        u) url=${OPTARG} ;;
+  case "${option}" in
+  u) url=${OPTARG} ;;
 
-        o) output=${OPTARG} ;;
+  o) output=${OPTARG} ;;
 
-        *) 
-           exit 1 ;;
+  *)
+    exit 1
+    ;;
 
-        \?) usage; >&2
-           exit 1 ;;
-    esac
+  \?)
+    usage
+    >&2
+    exit 1
+    ;;
+  esac
 done
-
 
 if [[ "$url" == "" ]] || [[ "$url" == " " ]] || [[ "$url" == "\n" ]]; then
 
-    usage
-    exit 1
+  usage
+  exit 1
 fi
-
 
 if [[ ! -f $url ]]; then
 
-    exist_url_folder
+  exist_url_folder
+
+  echo -e "\n[+] Executing Waybackurls scan..\n"
+  (/usr/bin/timeout 60 $HOME/go/bin/waybackurls $url >./ways.tmp) &
+  ways_pid=$!
+  echo -e "\n[+] Executing Urlfinder scan..\n"
+  ($HOME/go/bin/urlfinder -d $url -silent -o ./finder.tmp) &
+  ur_pid=$!
+
+  wait $ways_pid
+  wait $ur_pid
+
+  cat *.tmp | sort -u >>"./URL_ENUM/${url}_urls"
+
+  clear
+  echo -e "[+] Output saved in ./URL_ENUM/${url}_urls"
+
+elif [[ -f $url ]]; then
+
+  while read $ur; do
 
     echo -e "\n[+] Executing Waybackurls scan..\n"
-    (/usr/bin/timeout 60 $HOME/go/bin/waybackurls $url > ./ways.tmp) &
+    (/usr/bin/timeout 60 $HOME/go/bin/waybackurls $url >./ways.tmp) &
     ways_pid=$!
     echo -e "\n[+] Executing Urlfinder scan..\n"
     ($HOME/go/bin/urlfinder -d $url -silent -o ./finder.tmp) &
@@ -64,44 +84,23 @@ if [[ ! -f $url ]]; then
     wait $ways_pid
     wait $ur_pid
 
-    cat *.tmp | sort -u  > "./URL_ENUM/${url}_urls"
+    clear
+
+    filename = $(echo -e "$url" | sed -e 's/https:\/\///g' -e 's/\//_/g')
+    cat *.tmp | sort -u >"./URL_ENUM/${filename}"
     rm *.tmp
 
     clear
-    echo -e "[+] Output saved in ./URL_ENUM/${url}_urls"
 
-elif [[ -f $url ]]; then
-    
-    while read $ur; do
+    wait
+    clear
 
-        echo -e "\n[+] Executing Waybackurls scan..\n"
-        (/usr/bin/timeout 60 $HOME/go/bin/waybackurls $url > ./ways.tmp) &
-        ways_pid=$!
-        echo -e "\n[+] Executing Urlfinder scan..\n"
-        ($HOME/go/bin/urlfinder -d $url -silent -o ./finder.tmp) &
-        ur_pid=$!
-
-        wait $ways_pid
-        wait $ur_pid
-
-        clear
-        cat *.tmp | sort -u  > "./URL_ENUM/${url}_urls"
-        rm *.tmp
-
-        clear
-        
-        wait
-        clear
-        
-    done < $url
-    echo -e "[+] Output saved in multiple files '*_urls'"
-
+  done <$url
+  echo -e "[+] Output saved in multiple files '*_urls'"
 
 else
 
-    usage
-    exit 1
+  usage
+  exit 1
 
 fi
-
-

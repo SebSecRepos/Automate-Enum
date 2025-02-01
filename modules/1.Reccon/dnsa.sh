@@ -49,8 +49,9 @@ axfr_attack () {
     echo "$1" | grep nameserver &>/dev/null
     if [[ $? -eq 0  ]];then
         echo "$1" | grep nameserver | cut -d '=' -f2  | while read -r line; do 
+            clear
             echo -e "\n[+] ---------- AXFR Atack results for $2 @$line -----------\n" > "./DNS_ENUM/${2}/${line}_axfr"
-            /usr/bin/dig axfr $2 @$line >> "./DNS_ENUM/${2}/${line}_axfr"
+            /usr/bin/timeout 20 /usr/bin/dig axfr $2 @$line >> "./DNS_ENUM/${2}/${line}_axfr" 2>/dev/null
         done
     fi
 }
@@ -113,7 +114,7 @@ elif [[ -f $domain ]]; then
     echo -e "\n ${green}[+] ${yellow}---------- Performing ${blue}DNS Lookup${end} & ${red}AXFR Attack ${yellow}-----------${end}\n"
     exist_domain_folder
 
-    limit_process=70
+    limit_process=120
     current=0
 
     for dm in $(cat $domain);do
