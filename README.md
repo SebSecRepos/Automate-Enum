@@ -19,9 +19,11 @@ sudo ./installer.sh
 ae <module> <option>  
 ```
 
-![imagen](https://github.com/user-attachments/assets/2f2d381c-8595-4ef4-9ce0-136f35a061f8)
+![imagen](https://github.com/user-attachments/assets/8d95f306-393c-4d14-b873-1e1120a7fe0f)
 
-![imagen](https://github.com/user-attachments/assets/b42163f2-7a01-4db1-809a-b8ef703d2b26)
+
+![imagen](https://github.com/user-attachments/assets/9d5ff15e-914b-48ca-bd3c-6ab90c467245)
+
 
 -----
 
