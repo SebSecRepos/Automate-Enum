@@ -66,7 +66,7 @@ if [[ ! -f $url ]]; then
   wait $ur_pid
 
   cat *.tmp | sort -u >>"./URL_ENUM/${url}_urls"
-  rm *.tmp
+ # rm *.tmp
   clear
   echo -e "[+] Output saved in ./URL_ENUM/${url}_urls"
 

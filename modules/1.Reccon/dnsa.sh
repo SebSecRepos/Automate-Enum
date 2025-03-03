@@ -50,7 +50,7 @@ axfr_attack () {
     if [[ $? -eq 0  ]];then
         echo "$1" | grep nameserver | cut -d '=' -f2  | while read -r line; do 
             clear
-            echo -e "\n[+] ---------- AXFR Atack results for $2 @$line -----------\n" > "./DNS_ENUM/${2}/${line}_axfr"
+            echo -e "\n[+] ---------- AXFR Attack results for $2 @$line -----------\n" > "./DNS_ENUM/${2}/${line}_axfr"
             /usr/bin/timeout 20 /usr/bin/dig axfr $2 @$line >> "./DNS_ENUM/${2}/${line}_axfr" 2>/dev/null
         done
     fi

@@ -74,7 +74,7 @@ function compare() {
 
 
 
-compare $list /opt/automate-enum/wordlist/payloads.txt 
+compare $list /opt/automate-enum/wordlist/importants.txt 
 
 wait
 
